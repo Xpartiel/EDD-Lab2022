@@ -1,4 +1,4 @@
-package Clases;
+
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
 
 public class Lista<T> implements Collection<T> {
 
-    // Clase Nodo
+    /* CLASE NODO */
     private class Nodo {
         public T elemento;
         public Nodo anterior;
@@ -18,7 +18,7 @@ public class Lista<T> implements Collection<T> {
         }
     }
 
-    // Iterador
+    /* ITERADOR */
     private class Iterador implements IteradorLista<T> {
         public Nodo anterior;
         public Nodo siguiente; 
@@ -27,19 +27,20 @@ public class Lista<T> implements Collection<T> {
             siguiente = cabeza;
         }
 
-        @Override public boolean hasNext(){
+        @Override
+        public boolean hasNext(){
             return siguiente != null;
         }
 
-        @Override public T next(){
-            if(!hasNext())
-                throw new NoSuchElementException();
+        @Override
+        public T next(){
+            if( !hasNext() )
+                throw new NoSuchElementException("Nada al frente...");
             T regresar = siguiente.elemento;
             
             this.anterior = this.siguiente ;
             this.siguiente=siguiente.siguiente;
             return regresar;
-
         }
         
         @Override
@@ -48,15 +49,14 @@ public class Lista<T> implements Collection<T> {
         }
         
         @Override
-        public T previous() {
-            if (!hasPrevious())
+        public T previous(){
+            if ( !hasPrevious() )
                 throw new NoSuchElementException();
             T regresar = anterior.elemento;
 
             this.siguiente = this.anterior;
             this.anterior = anterior.anterior;
             return regresar;
-
         }
 
         @Override
@@ -66,11 +66,10 @@ public class Lista<T> implements Collection<T> {
         }
         
         @Override
-        public void end() {
+        public void end(){
             this.anterior = ultimo;
             this.siguiente = null;
         }
-        
     }
 
     private Nodo cabeza;
@@ -86,12 +85,10 @@ public class Lista<T> implements Collection<T> {
      */
     @Override
     public void add(T elemento){
-        if(elemento == null){
+        if( elemento == null )
             throw new IllegalArgumentException("El elemento es null");
-        }
         agregaFinal(elemento);
     }
-    
     
     /**
      * Agrega un elemento al inicio de la lista. Si la lista no tiene elementos,
@@ -100,14 +97,13 @@ public class Lista<T> implements Collection<T> {
      * @throws IllegalArgumentException si <code>elemento</code> es
      *         <code>null</code>.
      */
-    public void agregaInicio(T elemento) {
-        if (elemento == null) {
+    public void agregaInicio( T elemento ){
+        if ( elemento == null )
             throw new IllegalArgumentException("El elemento es null");
-        }
-        Nodo nuevo = new Nodo(elemento);
-        if (cabeza == null) {
+        Nodo nuevo = new Nodo( elemento );
+        if ( cabeza == null ){
             this.cabeza = this.ultimo = nuevo;
-        } else {
+        }else{
             this.cabeza.anterior = nuevo;
             nuevo.siguiente = this.cabeza;
             this.cabeza = nuevo;
@@ -122,15 +118,13 @@ public class Lista<T> implements Collection<T> {
      * @throws IllegalArgumentException si <code>elemento</code> es
      *         <code>null</code>.
      */
-    public void agregaFinal(T elemento) {
-        if (elemento == null) {
+    public void agregaFinal( T elemento ){
+        if (elemento == null)
             throw new IllegalArgumentException("El elemento es null");
-        }
         Nodo nuevo = new Nodo(elemento);
         if(cabeza == null){
             this.cabeza = this.ultimo = nuevo;
-        }
-        else{
+        }else{
             this.ultimo.siguiente = nuevo;
             nuevo.anterior = this.ultimo;
             this.ultimo = nuevo;
@@ -140,8 +134,8 @@ public class Lista<T> implements Collection<T> {
 
     private Nodo buscaElemento(T elemento){
         Nodo n = cabeza;
-        while(n !=null){
-            if (elemento.equals(n.elemento)) {
+        while(n != null){
+            if ( elemento.equals(n.elemento) ) {
                 return n;
             }
             n=n.siguiente;
@@ -157,15 +151,15 @@ public class Lista<T> implements Collection<T> {
     public boolean delete(T elemento){
         if(elemento == null)
             return false;
+        
         Nodo n = buscaElemento(elemento);
-        if(n==null){
+        if( n==null )
             return false;
-        }
-        if(longi == 1){
+        if( longi == 1 ){
             empty();
             return true;
         }
-        if (n == cabeza) {
+        if ( n == cabeza ) {
             cabeza = cabeza.siguiente;
             cabeza.anterior = null;
             longi --;
@@ -181,9 +175,8 @@ public class Lista<T> implements Collection<T> {
         n.anterior.siguiente = n.siguiente;
         longi --;
         return true;
-    }    
-
-
+    }
+    
 
     /**
      * Regresa un elemento de la lista. (Ultimo)
@@ -217,18 +210,16 @@ public class Lista<T> implements Collection<T> {
      *         <code>false</code> en otro caso.
      */
     public boolean contains(T elemento){
-        if(buscaElemento(elemento) == null){
+        if( buscaElemento(elemento) == null )
             return false;
-        }
         return true;
     }
 
     /**
      * Vacía la lista.
-     * 
      */
     public void empty(){
-        cabeza =ultimo= null;
+        cabeza = ultimo = null;
         longi = 0;
     }
 
@@ -242,14 +233,12 @@ public class Lista<T> implements Collection<T> {
         return longi == 0;
     }
 
-    
-
     /**
      * Regresa una copia de la lista.
      * 
      * @return una copia de la lista.
      */
-    public Lista<T> clone() {
+    public Lista<T> clone(){
         Lista<T> nueva = new Lista<T>();
         Nodo nodo = cabeza;
         while (nodo != null) {
@@ -273,16 +262,26 @@ public class Lista<T> implements Collection<T> {
         }
         return false;
     }
-
-
     
     /**
-     * Metodo que invierte el orden de la lista .
-     * 
+     * Metodo que invierte el orden de la lista.
+     * Tiempo O(n), Espacio O(1)
      */
-    public void reverse() {
-        // Tu codigo aqui
-        return ;
+    public void reverse(){
+        if( !isEmpty() ){
+            //Borramos nodos en orden, pero los reinsertamos al inicio.
+            Iterador itera = new Iterador();
+            T var = itera.next();
+            int i=0;
+            while( i<size() ){
+                i++;
+                delete( var );
+                agregaInicio( var );
+                if( itera.hasNext() )
+                    var = itera.next();
+            }
+        }
+        
     }
 
     /**
@@ -292,17 +291,29 @@ public class Lista<T> implements Collection<T> {
      * a -> b -> c -> d
      */
     public String toString(){
-        // Tu codigo aqui
-        return "";
+        Iterador itera = new Iterador();
+        String res ="";
+        while( itera.hasNext() )
+            res += ( itera.next() ).toString() +" -> ";
+        return ( 0<res.length() )?res.substring(0, res.length()-4):res;
     }
 
     /**
      * Junta dos listas siempre y cuando sean del mismo tipo.
      * 
      */
-    public void append(Lista<T> lista) {
-        // Tu codigo aqui
-        return ;
+    public void append( Lista<T> lista ) {
+        if( lista == null)
+            throw new IllegalArgumentException("Lista nula");
+        // Si los tipos de las cabezas son iguales, procede
+        if( this.cabeza.elemento.getClass().equals( lista.cabeza.elemento.getClass() )){
+            Iterador itera = lista.new Iterador();
+            while( itera.hasNext() ){
+                this.agregaFinal( itera.next() );
+            }
+        }else{
+            throw new IllegalArgumentException("Esta lista no era valida");
+        }
     }
 
     /**
@@ -315,10 +326,17 @@ public class Lista<T> implements Collection<T> {
      * @throws IllegalArgumentException si <code>elemento</code> es
      *         <code>null</code>.
      */
-    public int indexOf(T elemento) {
-        // Tu codigo aqui
-        return 0;
-
+    public int indexOf( T elemento ){
+        if( elemento==null )
+            throw new IllegalArgumentException("Elemento nulo");
+        Iterador itera = new Iterador();
+        int i = 0;
+        while( itera.hasNext() ){
+            if ( itera.next().equals(elemento) )
+                return i;
+            ++i;
+        }
+        return -1;
     }
     
     /**
@@ -338,14 +356,65 @@ public class Lista<T> implements Collection<T> {
      * @throws IllegalArgumentException si <code>elemento</code> es
      *                                  <code>null</code>.
      */
-    public void insert(int i, T elemento) {
-        // Tu codigo aqui
-        return ;
+    public void insert( int i, T elemento ) {
+        if( elemento == null )
+            throw new IllegalArgumentException("Elemento nulo");
+        if( i <= 0 )
+            this.agregaInicio(elemento);
+        else if( longi <= i )
+            this.agregaFinal(elemento);
+        else{
+            Nodo aux = cabeza;
+            for(int j=1; j<i && aux.siguiente!=null; j++)
+                aux = aux.siguiente;
+            
+            Nodo nuevo = new Nodo(elemento);
+            nuevo.anterior = aux;
+            nuevo.siguiente = aux.siguiente;
+            aux.siguiente.anterior = nuevo;
+            aux.siguiente = nuevo;
+
+            ++longi;
+        }
     }
 
     // Tu comentario
-    public void mezclaAlternada(Lista<T> lista){
-        return;
+    public void mezclaAlternada( Lista<T> lista ){
+        if( lista==null )
+            throw new IllegalArgumentException("Lista nula");
+        /*
+            saca el reverso
+            append a la lista parametro
+            vaciar lista original
+            añadir al final de la original el primer elemento de la lista parametro
+            añadir al final de la original el ultimo elemento de la lista parametro
+            borrar cabeza y cola de lista parametro
+
+            1 2 3 4 5 
+            6 7 8 9 10
+
+            5 4 3 2 1
+            6 7 8 9 10
+
+            6 7 8 9 10 5 4 3 2 1
+
+            1 6 2 7 3 8 4 9 5 10
+            -
+        */
+        this.reverse();
+        lista.append( this );
+        this.empty();
+        int tama = /*this.size() + */lista.size();
+        for (int i = 0; i<tama; i++) {
+            if( lista.ultimo != null ){
+                this.add( lista.ultimo.elemento );
+                lista.delete(lista.ultimo.elemento);
+            }
+            if( lista.cabeza != null){
+                this.add( lista.cabeza.elemento );
+                lista.delete(lista.cabeza.elemento);
+            }
+        }  
     }
 
     /**
@@ -362,5 +431,56 @@ public class Lista<T> implements Collection<T> {
      */
     public IteradorLista<T> iteradorLista() {
         return new Iterador();
+    }
+
+
+
+    public static void main(String[] args) {
+        /*
+        Lista<Integer> primera = new Lista<Integer>();
+        Lista<Integer> segunda = new Lista<Integer>();
+        Lista<String> tercera = new Lista<String>();
+
+        for (int i = 0; i <= 10; i++){
+            primera.add(i);
+            segunda.add(i);
+            tercera.add( ((Integer)(i)).toString() );
+        }
+            
+        System.out.println( primera.toString() );
+        primera.reverse();
+        System.out.println( primera.toString() );
+        
+        primera.append(segunda);
+        System.out.println( primera.toString() );
+
+        System.out.println( primera.indexOf(1) );
+        System.out.println( primera.indexOf(10) );
+        System.out.println( primera.indexOf(20) );
+
+        segunda.insert(5, 99 );
+        System.out.println( segunda.toString() );
+
+        segunda.insert(0, 88 );
+        System.out.println( segunda.toString() );
+
+        segunda.insert(256, 777 );
+        System.out.println( segunda.toString() );
+        */
+
+        Lista<Integer> pares = new Lista<Integer>();
+        Lista<Integer> nones = new Lista<Integer>();
+        for (int i = 0; i <= 10; i++){
+            if( i%2==0 )
+                pares.add(i);
+            else
+                nones.add(i);
+        }
+        System.out.println( pares.toString() );
+        System.out.println( nones.toString() +"\n");
+        pares.mezclaAlternada(nones);
+        System.out.println( pares.toString() );
+
+        
     }
 }

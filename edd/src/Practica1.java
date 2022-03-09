@@ -1,20 +1,77 @@
-package Clases;
+
 
 import java.util.Iterator;
 
 public class Practica1 {
     
 
-
-    // Aqui va tu comentario
+    /**
+     * Recorre la lista en orden con un iterador, actualizando paso a paso el valor de 
+     * @param lista     La lista (previamente ordenada) donde se inserta en orden el
+     *                  nuevo numero.
+     * @param nuevo     El numero a insertar.
+     * @return Una lista con un nuevo elemento insertado en orden
+     */
     public static Lista<Integer> AgregaOrdenado(Lista<Integer> lista, int nuevo) {
-        //Tu codigo aqui
-        return null;
+        if( lista.contains(nuevo) ){
+            int indice = lista.indexOf(nuevo);
+            lista.insert(indice, nuevo);
+        }else{
+            IteradorLista<Integer> itera = lista.iteradorLista();
+            int primero = (Integer)itera.next();
+            itera.end();
+            int segundo = (Integer)itera.previous();
+            //Verificar si no se tiene que agregar en uno de los extremos
+            if( nuevo<primero )
+                lista.agregaInicio(nuevo);
+            else if( segundo<nuevo )
+                lista.agregaFinal(nuevo);
+            else{//Se agrega entre numeros...
+                itera.start();
+                int aux=0;
+                //Reinicializar las variables para que sean contiguas y no separadas en extremos
+                segundo = primero;
+                for (int indice=0; indice<lista.size(); indice++){
+                    aux = (Integer)itera.next();
+                    //Se actualiza cada variable siempre que...
+                    if( aux<nuevo && primero<aux )//Este valor no sea  mayor que el nuevo, pero es mayor que el considerado antes
+                        primero = aux;
+                    if( nuevo<aux && segundo<aux )//Este valor sea menor que el nuevo, pero es mayor que el considerado antes
+                        segundo = aux;
+                    //Verificar que nuevo quedo atrapado entre numeros
+                    if( primero<nuevo && nuevo<segundo ){
+                        lista.insert( indice, nuevo );
+                        break;
+                    }
+                }
+            }
+        }
+        return lista;
     }
 
-    // Aqui va tu comentario
-    public static void Union(Lista<Integer> lista1,Lista<Integer> lista2) {
-         return ;
+    /**
+     * Metodo con el que los elementos de dos listas se unen en una sola
+     * Agregando a la primera los elementos que no se e
+     * @param lista1    La lista a modificar
+     * @param lista2    La lista con la que se compara cada elemento de la primera
+     */
+    public static void Union( Lista<Integer> lista1 , Lista<Integer> lista2 ){
+        //IteradorLista itera = lista2.iteradorLista();
+        IteradorLista itera = lista1.iteradorLista();
+        int aux=0;
+        //for (int i=0; i<lista2.size(); i++){            
+        for (int i=0; i<lista1.size(); i++){
+            if( itera.hasNext() )
+                aux = (Integer)itera.next();
+
+            while( lista2.delete(aux) );
+            /*if( lista1.contains( aux ) )
+                continue;
+            else
+                lista1.add( aux );*/
+        }
+        if( !lista2.isEmpty() )
+            lista1.append(lista2);
     }
 
     // Aqui va tu comentario
@@ -26,10 +83,10 @@ public class Practica1 {
 
 
     public static void main(String[] args) {
+        
         Lista<Integer> primera = new Lista<Integer>();
         Lista<Integer> segunda = new Lista<Integer>();
         Lista<Integer> tercera = new Lista<Integer>();
-        
         
         // Tests toString
         for (int i = 0; i <= 5; i++) {
@@ -37,7 +94,7 @@ public class Practica1 {
         }
         
         String test = "0 -> 1 -> 2 -> 3 -> 4 -> 5";
-        if (!primera.toString().equals(test)) {
+        if ( !primera.toString().equals(test) ) {
             System.out.println("1 El toString no funciona!");
         }
         primera = new Lista<Integer>();
@@ -187,16 +244,6 @@ public class Practica1 {
 
         if (!(primera.contains(2) && primera.size() == 1)) {
             System.out.println("1 La intersección no funciona!");
-        }
-        
-        
-
-
-
+        }        
     }   
-   
-
-    
-
-
 }

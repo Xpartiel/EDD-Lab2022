@@ -1,5 +1,5 @@
-Nombres ->
-        ->
+Nombres -> Uriel Balderas Aguilar
+        -> Luis Ernesto Hernandez Rosas
 
 compilar -> javac -d . src/*.java
 Ejecutar -> java Clases.Practica1
