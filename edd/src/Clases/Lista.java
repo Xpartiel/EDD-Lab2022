@@ -1,9 +1,15 @@
-
+package Clases;
+/**
+ * @author Uriel Balderas Aguilar
+ * @author Luis Ernesto Hernandez Rosas
+*/
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 // iterador
 //next
+
+// :D
 
 public class Lista<T> implements Collection<T> {
 
@@ -179,8 +185,7 @@ public class Lista<T> implements Collection<T> {
     
 
     /**
-     * Regresa un elemento de la lista. (Ultimo)
-     * y lo elimina.
+     * Regresa un elemento de la lista. (Ultimo) y lo elimina.
      * 
      * @return El elemento a sacar.
      */
@@ -193,8 +198,9 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Regresa el número de elementos en la lista.
+     * size
      * 
+     * Regresa el número de elementos en la lista.
      * @return el número de elementos en la lista.
      */
     public int size(){
@@ -202,8 +208,9 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Nos dice si un elemento está contenido en la lista.
+     * contains
      * 
+     * Nos indica si un elemento está contenido en la lista.
      * @param elemento el elemento que queremos verificar si está contenido en
      *                 la lista.
      * @return <code>true</code> si el elemento está contenido en la lista,
@@ -224,10 +231,11 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Nos dice si la lista es vacía.
+     * isEmpty
      * 
-     * @return <code>true</code> si la lista es vacía, <code>false</code> en
-     *         otro caso.
+     * Nos indica si la lista es vacía.
+     * @return <code>true</code> si la lista es vacía,
+     *         <code>false</code> en otro caso.
      */
     public boolean isEmpty(){
         return longi == 0;
@@ -281,14 +289,14 @@ public class Lista<T> implements Collection<T> {
                     var = itera.next();
             }
         }
-        
     }
 
     /**
-     * Regresa una representación en cadena de la coleccion.
+     * toString
      * 
-     * @return una representación en cadena de la coleccion.
-     * a -> b -> c -> d
+     * Devuelve una representación en cadena de caracteres de la lista.
+     * @return una representación en cadena de la lista, de la forma.
+     *          a -> b -> c -> d
      */
     public String toString(){
         Iterador itera = new Iterador();
@@ -299,8 +307,10 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Junta dos listas siempre y cuando sean del mismo tipo.
+     * Append
      * 
+     * Metodo con el que los elementos de la lista parametro se agregaran a la lista invocadora
+     * @param lista lista a insertar en la lista invocadora.
      */
     public void append( Lista<T> lista ) {
         if( lista == null)
@@ -331,6 +341,7 @@ public class Lista<T> implements Collection<T> {
             throw new IllegalArgumentException("Elemento nulo");
         Iterador itera = new Iterador();
         int i = 0;
+        //Devolver el indice en que el iterador se topa con el elemento solicitado
         while( itera.hasNext() ){
             if ( itera.next().equals(elemento) )
                 return i;
@@ -367,7 +378,7 @@ public class Lista<T> implements Collection<T> {
             Nodo aux = cabeza;
             for(int j=1; j<i && aux.siguiente!=null; j++)
                 aux = aux.siguiente;
-            
+            //Proceso para insertar el nuevo nodo
             Nodo nuevo = new Nodo(elemento);
             nuevo.anterior = aux;
             nuevo.siguiente = aux.siguiente;
@@ -432,11 +443,9 @@ public class Lista<T> implements Collection<T> {
     public IteradorLista<T> iteradorLista() {
         return new Iterador();
     }
-
-
-
+    /*
     public static void main(String[] args) {
-        /*
+        
         Lista<Integer> primera = new Lista<Integer>();
         Lista<Integer> segunda = new Lista<Integer>();
         Lista<String> tercera = new Lista<String>();
@@ -466,7 +475,6 @@ public class Lista<T> implements Collection<T> {
 
         segunda.insert(256, 777 );
         System.out.println( segunda.toString() );
-        */
 
         Lista<Integer> pares = new Lista<Integer>();
         Lista<Integer> nones = new Lista<Integer>();
@@ -479,8 +487,7 @@ public class Lista<T> implements Collection<T> {
         System.out.println( pares.toString() );
         System.out.println( nones.toString() +"\n");
         pares.mezclaAlternada(nones);
-        System.out.println( pares.toString() );
-
-        
+        System.out.println( pares.toString() );  
     }
+    */
 }

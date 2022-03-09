@@ -1,5 +1,5 @@
 package Clases;
-
+//no se si aqui ambin iban los @author o no...
 //import java.util.Comparator;
 
 public interface Collection<T> {

@@ -1,4 +1,9 @@
 package Clases;
+/**
+ * @author Uriel Balderas Aguilar
+ * @author Luis Ernesto Hernandez Rosas
+*/
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
