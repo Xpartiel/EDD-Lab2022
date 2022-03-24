@@ -1,14 +1,33 @@
-Nombres -> Uriel Balderas Aguilar
-        -> Luis Ernesto Hernandez Rosas
+## Nombres ->
+        ->
 
-compilar -> javac -d . src/*.java
-Ejecutar -> java Clases.Practica1
+compilar -> javac -d . src/Estructuras/*.java
+
+Ejecutar -> java edd.src.Estructuras.Practica2
 
 
-Para crear un iterador en una direccion usa
-Iterator<Integer> iter = lista.iterator();
-Ejemplo -> System.out.println(iter.next());
 
-Para crear un iterador en ambas direcciones direcciones usa
-IteradorLista<Integer> iter = lista.iteratorLista();
-Ejemplo -> System.out.println(iter.next());
+============ Automata ===================
+compile : javac -d . src/Automata/*.java
+run : java edd.src.Automata.VentanaPrincipal
+
+
+
+## Automata
+Recuerda, como tu automata usara objetos Pila y Cola. Debes compilar primero esa sección de la práctica. 
+
+
+Para cambiar el Automata Celular que se mostrara modifica la linea 61 de la clase VentanaPrincipal
+
+Para cambiar el tiempo entre evoluciones. modifica el valor 
+Thread.sleep(1000);
+de la linea 172 de la clase Ventana Principal, mientras más grande el número, más lento evolucionara. 
+
+## Colores
+Para agregar nuevos colores revisa el metodo Pinta de la clase Imagen.
+color 0: YELLOW
+color 1: BLUE
+color 2: WHITE
+color 3: BLACK
+color 4: RED
+color 5: GREEN

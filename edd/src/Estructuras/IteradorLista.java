@@ -1,9 +1,4 @@
-package Clases;
-/**
- * @author Uriel Balderas Aguilar
- * @author Luis Ernesto Hernandez Rosas
-*/
-
+package edd.src.Estructuras;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
