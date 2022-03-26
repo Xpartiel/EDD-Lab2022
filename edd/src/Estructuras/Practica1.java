@@ -1,8 +1,12 @@
-package Clases;
+package edd.src.Estructuras;
+
 /**
  * @author Uriel Balderas Aguilar
  * @author Luis Ernesto Hernandez Rosas
 */
+
+import edd.src.Estructuras.IteradorLista;
+import edd.src.Estructuras.Lista;
 
 import java.util.Iterator;
 
