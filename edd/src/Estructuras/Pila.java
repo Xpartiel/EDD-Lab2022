@@ -21,7 +21,6 @@ public class Pila<T> extends PushPop<T>{
         aux.siguiente = cabeza;
         cabeza = aux;
         longi ++;
-
     }
 
     /**
@@ -73,6 +72,8 @@ public class Pila<T> extends PushPop<T>{
         }
         return (res.length()<2)? res : res.substring(0,res.length()-2) ;
     }
+
+    
 
 
 }

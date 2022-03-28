@@ -59,4 +59,20 @@ public class Cola<T> extends PushPop<T>{
         }while( aux != null );
         return (res.length()<2)? res : res.substring(0,res.length()-2) ;
     }
+
+    /**
+     * append
+     * 
+     * Metodo auxiliar con el que dos colas son unidas en una tercera.
+     * @return La cola invocadora, unida a la cola parametro
+     */
+    public Cola<T> append( Cola<T> colita ){
+        Cola<T> inicial = this.clone();
+        Nodo aux = colita.cabeza;
+        while( aux != null ){
+            inicial.push( aux.elemento );
+            aux = aux.siguiente;
+        }
+        return inicial;
+    }
 }
