@@ -7,7 +7,10 @@ public class Cola<T> extends PushPop<T>{
      * 
      * Metodo que inserta un nuevo nodo al final de la estructura
      * @param elemento  el elemento del nuevo nodo a agregar
+     * @throws IllegalArgumentException si <code>elemento</code> es
+     *                                  <code>null</code>.
      */
+    @Override
     public void push(T elemento){
         if( elemento==null )
             throw new IllegalArgumentException("Elemento de validez nula...");
@@ -47,17 +50,21 @@ public class Cola<T> extends PushPop<T>{
     /**
      * toString
      * 
-     * Metodo con el que representamos la estructura en caracteres de texto
-     * @return Representacion textual de la estructura
+     * Regresa una representación en cadena de la cola.
+     * 
+     * @return una representación en cadena de la cola.
      */
-    public String toString(){
-        String res = "";
-        Nodo aux = this.cabeza;
-        do {
-            res += aux.elemento.toString() + ", ";
-            aux = aux.siguiente;
-        }while( aux != null );
-        return (res.length()<2)? res : res.substring(0,res.length()-2) ;
+    @Override
+    public String toString() {
+        if (isEmpty())
+            return "";
+        String a = "";
+        Nodo b = cabeza;
+        while (b != null) {
+            a += b.elemento + ", ";
+            b = b.siguiente;
+        }
+        return a;
     }
 
     /**

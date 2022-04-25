@@ -15,15 +15,18 @@ public class Imagen extends JPanel {
      * Tamanio de la celda para cada celula. 
      */
     public static final int sizeCell = 15;
+
     /**
      * Numero de celdas que contendra la malla. Este valor se aplica tanto para altura como para anchura.
      * Es decir la malla tendra numCellsxnumCell numero de celdas.
      */
     public static final int numCells = 40;
+
     /**
      * Tamanio real que debe de tener la malla considerando una linea divisoria entre las celdas, y el taminio de cada una. 
      */
     private static final int tam = numCells * sizeCell + numCells + 1;
+
     /**
      * Objeto en donde se va a pintar.
      */
@@ -60,10 +63,10 @@ public class Imagen extends JPanel {
      * @param matriz Representa la malla del automata con sus posibles estados. 
      * @param colores Se mapean a cada estado de la matriz para pintarlo de su respectivo color.
      */
-    public void pinta(int[][] matriz, Color[] colores) {
+    public void pinta(int[][] matriz, Color[] colores){
 	    Graphics2D gc = imagen.createGraphics();
-        for (int i=1;i<matriz.length+1;i++) {
-            for (int j=1;j<matriz.length+1;j++) {
+        for (int i=1; i<matriz.length+1; i++){
+            for (int j=1; j<matriz.length+1; j++){
                 int aux1i = (sizeCell*(i-1)+i);
                 int aux1j = (sizeCell*(j-1)+j);
 

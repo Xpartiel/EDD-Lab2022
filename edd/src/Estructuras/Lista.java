@@ -8,6 +8,7 @@ package edd.src.Estructuras;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Comparator;
 
 public class Lista<T> implements Collection<T> {
 
@@ -31,36 +32,38 @@ public class Lista<T> implements Collection<T> {
             siguiente = cabeza;
         }
 
-        @Override public boolean hasNext(){
+        @Override
+        public boolean hasNext(){
             return siguiente != null;
         }
 
-        @Override public T next(){
-            if(!hasNext())
+        @Override
+        public T next(){
+            if( !hasNext() )
                 throw new NoSuchElementException();
+
             T regresar = siguiente.elemento;
             
             this.anterior = this.siguiente ;
             this.siguiente=siguiente.siguiente;
             return regresar;
-
         }
         
         @Override
-        public boolean hasPrevious() {
+        public boolean hasPrevious(){
             return anterior != null;
         }
         
         @Override
         public T previous() {
-            if (!hasPrevious())
+            if ( !hasPrevious() )
                 throw new NoSuchElementException();
+
             T regresar = anterior.elemento;
 
             this.siguiente = this.anterior;
             this.anterior = anterior.anterior;
             return regresar;
-
         }
 
         @Override
@@ -70,11 +73,10 @@ public class Lista<T> implements Collection<T> {
         }
         
         @Override
-        public void end() {
+        public void end(){
             this.anterior = ultimo;
             this.siguiente = null;
         }
-        
     }
 
     private Nodo cabeza;
@@ -82,6 +84,8 @@ public class Lista<T> implements Collection<T> {
     private int longi;
     
     /**
+     * add
+     * 
      * Agrega un elemento a la lista.
      * 
      * @param elemento el elemento a agregar.
@@ -97,18 +101,21 @@ public class Lista<T> implements Collection<T> {
     }
     
     /**
+     * agregaInicio
+     * 
      * Agrega un elemento al inicio de la lista. Si la lista no tiene elementos,
      * el elemento a agregar será el primero y último.
+     * 
      * @param elemento el elemento a agregar.
      * @throws IllegalArgumentException si <code>elemento</code> es
      *         <code>null</code>.
      */
     public void agregaInicio(T elemento) {
-        if (elemento == null) {
+        if (elemento == null)
             throw new IllegalArgumentException("El elemento es null");
-        }
+
         Nodo nuevo = new Nodo(elemento);
-        if (cabeza == null) {
+        if ( cabeza == null ){
             this.cabeza = this.ultimo = nuevo;
         } else {
             this.cabeza.anterior = nuevo;
@@ -119,16 +126,19 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
+     * agregaFinal
+     * 
      * Agrega un elemento al final de la lista. Si la lista no tiene elementos,
      * el elemento a agregar será el primero y último.
+     * 
      * @param elemento el elemento a agregar.
      * @throws IllegalArgumentException si <code>elemento</code> es
      *         <code>null</code>.
      */
     public void agregaFinal(T elemento) {
-        if (elemento == null) {
+        if (elemento == null)
             throw new IllegalArgumentException("El elemento es null");
-        }
+        
         Nodo nuevo = new Nodo(elemento);
         if(cabeza == null){
             this.cabeza = this.ultimo = nuevo;
@@ -141,10 +151,18 @@ public class Lista<T> implements Collection<T> {
         longi++;
     }
 
+    /**
+     * buscaElemento
+     * 
+     * Metodo que devuelve el primer Nodo encontrado que contenga el elemento
+     * buscado
+     * 
+     * @param elemento el elemento a buscar en la lista
+     */
     private Nodo buscaElemento(T elemento){
         Nodo n = cabeza;
-        while(n !=null){
-            if (elemento.equals(n.elemento)) {
+        while(n != null){
+            if ( elemento.equals(n.elemento) ){
                 return n;
             }
             n=n.siguiente;
@@ -153,28 +171,31 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Elimina un elemento de la lista.
+     * delete
+     * 
+     * Metodo que indica si se puede eliminar el primer Nodo que contenga
+     * el elemento indicado en la lista.
      * 
      * @param elemento el elemento a eliminar.
      */ 
     public boolean delete(T elemento){
         if(elemento == null)
             return false;
+
         Nodo n = buscaElemento(elemento);
         if(n==null){
             return false;
-        }
-        if(longi == 1){
+        }if(longi == 1){
             empty();
             return true;
         }
+
         if (n == cabeza) {
             cabeza = cabeza.siguiente;
             cabeza.anterior = null;
             longi --;
             return true;
-        }
-        if (n == ultimo) {
+        }if (n == ultimo) {
             ultimo = ultimo.anterior;
             ultimo.siguiente = null;
             longi --;
@@ -187,20 +208,25 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
+     * pop
+     * 
      * Regresa un elemento de la lista. (Ultimo)
      * y lo elimina.
      * 
-     * @return El elemento a sacar.
+     * @return El elemento del nodo que sale.
      */
     public T pop(){
         T valor = ultimo.elemento;
         ultimo = ultimo.anterior;
-        ultimo.siguiente = null;
-        longi --;
+        if( ultimo != null )
+            ultimo.siguiente = null;
+        --longi;
         return valor;
     }
 
     /**
+     * size
+     * 
      * Regresa el número de elementos en la lista.
      * 
      * @return el número de elementos en la lista.
@@ -210,6 +236,8 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
+     * contains
+     * 
      * Nos dice si un elemento está contenido en la lista.
      * 
      * @param elemento el elemento que queremos verificar si está contenido en
@@ -218,15 +246,16 @@ public class Lista<T> implements Collection<T> {
      *         <code>false</code> en otro caso.
      */
     public boolean contains(T elemento){
-        if(buscaElemento(elemento) == null){
+        if(buscaElemento(elemento) == null)
             return false;
-        }
+        
         return true;
     }
 
     /**
-     * Vacía la lista.
+     * empty
      * 
+     * Vacía la lista.
      */
     public void empty(){
         cabeza = ultimo = null;
@@ -234,7 +263,9 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Nos dice si la lista es vacía.
+     * isEmpty
+     * 
+     * Nos indica si la lista es vacía.
      * 
      * @return <code>true</code> si la lista es vacía, <code>false</code> en
      *         otro caso.
@@ -244,7 +275,9 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Regresa una copia de la lista.
+     * clone
+     * 
+     * Metodo para generar una copia de la lista.
      * 
      * @return una copia de la lista.
      */
@@ -259,20 +292,23 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Nos dice si la coleccion es igual a otra coleccion recibida.
+     * equals
+     * 
+     * Nos indica si la coleccion es igual a otra coleccion recibida.
      * 
      * @param coleccion la coleccion con el que hay que comparar.
      * @return <tt>true</tt> si la coleccion es igual a la coleccion recibido
      *         <tt>false</tt> en otro caso.
      */
-    @Override public boolean equals(Object o){
+    @Override
+    public boolean equals(Object o){
         if (!(o instanceof Lista) ) {
             System.out.println("El ejemplar no es una lista");
             return false;
         }
         @SuppressWarnings("unchecked") Lista<T> lista2 = (Lista<T>)o;
         if (this.longi != lista2.longi) {
-            System.out.println("Los tamaños no son iguales.");
+            System.out.println("Tamaños de lista desiguales.");
             return false;
         }
         if(this.isEmpty() && lista2.isEmpty()){
@@ -319,21 +355,23 @@ public class Lista<T> implements Collection<T> {
      * toString
      * 
      * Devuelve una representación en cadena de caracteres de la lista.
+     * 
      * @return una representación en cadena de la lista, de la forma.
      *          a -> b -> c -> d
      */
     public String toString(){
         Iterador itera = new Iterador();
-        String res ="";
+        String res ="{";
         while( itera.hasNext() )
             res += ( itera.next() ).toString() +" -> ";
-        return ( 0<res.length() )?res.substring(0, res.length()-4):res;
+        return ( 1<res.length() )?res.substring(0, res.length()-4)+"}":res+"}";
     }
 
     /**
      * append
      * 
      * Metodo con el que los elementos de la lista parametro se agregaran a la lista invocadora
+     * 
      * @param lista lista a insertar en la lista invocadora.
      */
     public void append( Lista<T> lista ) {
@@ -365,6 +403,7 @@ public class Lista<T> implements Collection<T> {
     public int indexOf( T elemento ){
         if( elemento==null )
             throw new IllegalArgumentException("Elemento nulo");
+
         Iterador itera = new Iterador();
         int i = 0;
         //Devolver el indice en que el iterador se topa con el elemento solicitado
@@ -377,6 +416,8 @@ public class Lista<T> implements Collection<T> {
     }
     
     /**
+     * insert
+     * 
      * Inserta un elemento en un índice explícito.
      *
      * Si el índice es menor que cero, el elemento se agrega al inicio de la
@@ -403,7 +444,8 @@ public class Lista<T> implements Collection<T> {
      * 
      * Metodo que modifica la lista invocadora, de modo que dos listas (una parametro y una invocadora)
      * se unan en una, alternando entre los elementos originales de cada una.
-     * @param lista
+     * 
+     * @param lista la lista 
      */
     public void mezclaAlternada( Lista<T> lista ){
         if( lista==null )
@@ -412,7 +454,7 @@ public class Lista<T> implements Collection<T> {
         this.reverse();
         lista.append( this );
         this.empty();
-        int tama = /*this.size() + */lista.size();
+        int tama = lista.size();
         for (int i = 0; i<tama; i++) {
             if( lista.ultimo != null ){
                 this.add( lista.ultimo.elemento );
@@ -440,4 +482,73 @@ public class Lista<T> implements Collection<T> {
     public IteradorLista<T> iteradorLista() {
         return new Iterador();
     }
+
+    /**
+     * merge
+     * 
+     * Metodo para incorporar ordenadamente dos listas en una nueva
+     * 
+     * @param izq   Primer lista a incorporar
+     * @param der   Segunda lista a incorporar
+     * @param comparador    Crierio bajo el que se ordena
+     */
+    public Lista<T> merge(Lista<T> izq, Lista<T> der, Comparator<T> comparador){
+        Lista<T> resultado = new Lista<T>();
+        Nodo auxIzq = izq.cabeza;
+        Nodo auxDer = der.cabeza;
+        while (auxIzq != null && auxDer != null ) {
+            if(comparador.compare(auxIzq.elemento, auxDer.elemento) < 0){
+                resultado.add(auxIzq.elemento);
+                auxIzq = auxIzq.siguiente;
+            }else{
+                resultado.add(auxDer.elemento);
+                auxDer = auxDer.siguiente;
+            }
+        }
+        if (auxIzq == null) {
+            while (auxDer != null) {
+                resultado.add(auxDer.elemento);
+                auxDer = auxDer.siguiente;
+            }
+        }else{
+            while (auxIzq != null) {
+                resultado.add(auxIzq.elemento);
+                auxIzq = auxIzq.siguiente;
+            }
+        }
+       return resultado;
+    }
+
+    /**
+     * mergeSort
+     * 
+     * Metodo para ordenar los elementos de una lista
+     * 
+     * @param comparador    El criterio bajo el que se ordena
+     */
+    public Lista<T> mergeSort(Comparator<T> comparador){
+        if(longi == 1 || longi == 0){
+            return clone();
+        }
+        Lista<T> izq = new Lista<T>();
+        Lista<T> der = new Lista<T>();
+
+        int mitad = longi/2;
+        Nodo aux = cabeza;
+        while(aux != null && mitad --!= 0 ){ 
+            izq.add(aux.elemento);
+            aux = aux.siguiente;
+        }
+        while(aux != null){
+            der.add(aux.elemento);
+            aux = aux.siguiente;
+        }
+        System.out.println("izq: " + izq.toString());
+        System.out.println("der: " + der.toString());
+        izq = izq.mergeSort(comparador);
+        der = der.mergeSort(comparador);
+        return merge(izq, der, comparador);
+    }
+
+
 }

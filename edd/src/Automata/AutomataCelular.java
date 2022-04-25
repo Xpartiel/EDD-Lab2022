@@ -14,8 +14,8 @@ public interface AutomataCelular {
      */
     public int getEvolucion();
 
-     /*
-     *Metodo que reinicia el numero de evolucion.
+    /*
+     * Metodo que reinicia el numero de evolucion.
      */
     public void reiniciaEvolucion();
 

@@ -39,9 +39,9 @@ public abstract class PushPop<T> {
 
 
     public T peek(){
-        if (isEmpty()) {
+        if ( isEmpty() )
             throw new NoSuchElementException("");
-        }
+        
         return cabeza.elemento;
     } 
 
@@ -82,7 +82,8 @@ public abstract class PushPop<T> {
     
     public abstract String toString() ;
 
-    @Override public boolean equals(Object o) {
+    @Override
+    public boolean equals(Object o) {
         if (o == null || this.getClass() != o.getClass()) {
             System.out.println("Ejemplares distintos");
             return false;
@@ -106,7 +107,4 @@ public abstract class PushPop<T> {
         }  
         return true;
     }
-
-
-
 }
