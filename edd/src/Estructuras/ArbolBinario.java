@@ -3,6 +3,8 @@ package edd.src.Estructuras;
 import java.util.NoSuchElementException;
 import java.util.Comparator;
 
+import java.lang.Iterable;
+
 /**
  * <p>
  * Clase abstracta para árboles binarios genéricos.
@@ -106,6 +108,13 @@ public abstract class ArbolBinario<T> implements Collection<T> {
         }
 
         /**
+         * Modifica el elemento del vértice.
+         */
+        @Override public void set( T elem ){
+            this.elemento = elem;
+        }
+
+        /**
          * Regresa la altura del vértice.
          * 
          * @return la altura del vértice.
@@ -206,13 +215,15 @@ public abstract class ArbolBinario<T> implements Collection<T> {
 
     }
 
+    
+    /*
     // Revisar forEach
     public ArbolBinario(Collection<T> coleccion) {
         for (T elemento : coleccion){
             this.add(elemento);
         }
-    }
-    
+    }*/
+
     /**
      * Construye un nuevo vértice, usando una instancia de {@link Vertice}. Para
      * crear vértices se debe utilizar este método en lugar del operador
@@ -335,7 +346,6 @@ public abstract class ArbolBinario<T> implements Collection<T> {
      * Metodo auxiliar de toString
      *
      */
-
     private String toString(Vertice v, int l, int[] m) {
         String s = v.toString() + "\n";
         m[l] = 1;
@@ -399,7 +409,6 @@ public abstract class ArbolBinario<T> implements Collection<T> {
         return this.raiz.equals(arbol.raiz);
     }
 
-
     /**
      * Convierte el vértice (visto como instancia de {@link
      * VerticeArbolBinario}) en vértice (visto como instancia de {@link
@@ -414,18 +423,13 @@ public abstract class ArbolBinario<T> implements Collection<T> {
         return (Vertice) vertice;
     }
 
+    public ArbolBinario(Collection<T> coleccion) {
+        
+    }
 
-    
-
-
-
-    
-
-
-
-
-   
-
-
-
+    @Override
+    public Collection<T> clone(){
+        // TODO Auto-generated method stub
+        return null;
+    }
 }

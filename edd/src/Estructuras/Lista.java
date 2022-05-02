@@ -216,6 +216,9 @@ public class Lista<T> implements Collection<T> {
      * @return El elemento del nodo que sale.
      */
     public T pop(){
+        if( isEmpty() )
+            throw new NullPointerException("No puedo expulsar de una lista ya vacia");
+
         T valor = ultimo.elemento;
         ultimo = ultimo.anterior;
         if( ultimo != null )
@@ -337,17 +340,36 @@ public class Lista<T> implements Collection<T> {
      */
     public void reverse(){
         if( !isEmpty() ){
+            /*
             //Borramos nodos en orden, pero los reinsertamos al inicio.
             Iterador itera = new Iterador();
             T var = itera.next();
             int i=0;
-            while( i<size() ){
+            int iteraciones = size();
+            while( i<iteraciones ){
                 i++;
                 delete( var );
                 agregaInicio( var );
                 if( itera.hasNext() )
                     var = itera.next();
+            }*/
+
+            Nodo exUltimo = this.ultimo;
+            Nodo exCabeza = this.cabeza;
+
+            Nodo invirtiendo = this.cabeza;
+            Nodo refAux = invirtiendo.siguiente;
+            
+            invirtiendo.siguiente = invirtiendo.anterior;
+            invirtiendo.anterior = refAux;
+            while( invirtiendo.anterior != null ){
+                invirtiendo = invirtiendo.anterior;
+                refAux = invirtiendo.siguiente;
+                invirtiendo.siguiente = invirtiendo.anterior;
+                invirtiendo.anterior = refAux;
             }
+            this.cabeza = exUltimo;
+            this.ultimo = exCabeza;
         }
     }
 

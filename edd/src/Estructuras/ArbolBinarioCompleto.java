@@ -44,6 +44,14 @@ public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
 
     }
 
+    
+
+    @Override
+    public boolean delete(T elemento) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
     /**
      * Constructor sin parámetros. Para no perder el constructor sin parámetros
      * de {@link ArbolBinario}.
@@ -132,11 +140,13 @@ public class ArbolBinarioCompleto<T> extends ArbolBinario<T> {
      * 
      * @return un iterador para iterar el árbol.
      */
-    @Override
+    //@Override
     public Iterator<T> iterator() {
         return new Iterador();
     }
 
-
-
+    @Override
+    public ArbolBinarioCompleto clone(){
+        return null;
+    }
 }

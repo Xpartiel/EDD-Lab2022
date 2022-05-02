@@ -67,4 +67,14 @@ public class Pila<T> extends PushPop<T>{
         }
         return (res.length()<2)? res : res.substring(0,res.length()-2) ;
     }
+
+    public String customString(){
+        String res = "";
+        Nodo n = this.cabeza;
+        while ( n != null){
+            res += n.elemento.toString();
+            n = n.siguiente;
+        }
+        return res;
+    }
 }
